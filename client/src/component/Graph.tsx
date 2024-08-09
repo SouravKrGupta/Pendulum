@@ -6,7 +6,7 @@ interface GraphProps {
   pendulumData: { color: string; energy: { mechanical: number; kinetic: number; potential: number } }[];
 }
 
-const Graph: React.FC<GraphProps> = ({ energyData, pendulumData }) => {
+const Graph: React.FC<GraphProps> = ({  pendulumData }) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   // Filter data based on the selected color

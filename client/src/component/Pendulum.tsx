@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
-
+import {Group} from 'three'
 interface PendulumProps {
   isPlaying: boolean;
   playbackSpeed: number;
@@ -32,7 +32,7 @@ const Pendulum: React.FC<PendulumProps> = ({
   const [angle2, setAngle2] = useState(-Math.PI / 4);
   const [speed2, setSpeed2] = useState(0.02);
 
-  const pendulumRef = useRef<THREE.Group>(null);
+  const pendulumRef = useRef<Group>(null);
 
   useEffect(() => {
     setSpeed1(0.02 * playbackSpeed);

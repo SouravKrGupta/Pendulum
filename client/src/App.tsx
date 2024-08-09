@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Pendulum from './component/Pendulum';
 import Graph from './component/Graph';
@@ -14,10 +14,10 @@ function App() {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [resetPendulum, setResetPendulum] = useState(false);
   const [twoPendulums, setTwoPendulums] = useState(false);
-  const [length1, setLength1] = useState(120);
-  const [mass1, setMass1] = useState(120);
-  const [length2, setLength2] = useState(120);
-  const [mass2, setMass2] = useState(120);
+  const [length1, setLength1] = useState(5);
+  const [mass1, setMass1] = useState(0.5);
+  const [length2, setLength2] = useState(5);
+  const [mass2, setMass2] = useState(0.5);
   const [airResistance, setAirResistance] = useState(false);
   const [pendulumData, setPendulumData] = useState<{ color: string; energy: { mechanical: number; kinetic: number; potential: number } }[]>([]);
 
