@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import { Group } from 'three';
 import axios from 'axios';
-
+import { API_BASE_URL } from '../config';
 interface PendulumProps {
   isPlaying: boolean;
   playbackSpeed: number;
@@ -106,7 +106,7 @@ const Pendulum: React.FC<PendulumProps> = ({
         onEnergyChange(pendulumData);
 
         // Post energy data to backend
-        axios.post('http://localhost:8080/api/v1/energy/add', {
+        axios.post(`${API_BASE_URL}/energy/add`, {
           potentialEnergy1: potential1,
           kineticEnergy1: kinetic1,
           mechanicalEnergy1: mechanical1,

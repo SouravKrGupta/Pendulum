@@ -6,10 +6,12 @@ import Recorder from './component/Recorder';
 import Controls from './component/Controls';
 import Options from './component/Options';
 import ControlPanel from './component/ControlPanel';
-import Protractor from './component/canvas/Protector'; 
+import Protractor from './component/canvas/Protector';
 import BallGroup from './component/canvas/BallGroup';
 import axios from 'axios';
-
+import Language from './component/Message/Language';
+import Details from './component/Message/Details';
+import { API_BASE_URL } from './config';
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
@@ -21,6 +23,9 @@ function App() {
   const [mass2, setMass2] = useState(0.5);
   const [airResistance, setAirResistance] = useState(false);
   const [pendulumData, setPendulumData] = useState<{ color: string; energy: { mechanical: number; kinetic: number; potential: number } }[]>([]);
+  const [showLanguagePopup, setShowLanguagePopup] = useState(false);
+  const [showDetailsPopup, setShowDetailsPopup] = useState(false);
+  const [description, setDescription] = useState("Default description");
 
   const handlePlayPauseClick = () => {
     setIsPlaying(prev => !prev);
@@ -41,35 +46,50 @@ function App() {
     setTimeout(() => setResetPendulum(false), 0);
   };
 
-  const handlePendulumChange =async (length1: number, mass1: number, length2?: number, mass2?: number) => {
+  const handlePendulumChange = async (length1: number, mass1: number, length2?: number, mass2?: number) => {
     setLength1(length1);
     setMass1(mass1);
     setLength2(length2 ?? 0);
     setMass2(mass2 ?? 0);
     setTwoPendulums(length2 !== undefined && mass2 !== undefined);
-    // Save pendulum data to backend
-   
+    
     try {
-
-    await axios.post('http://localhost:8080/api/v1/pendulum', {
-      Length1: length1,
-      Mass1: mass1,
-      Length2: length2 ?? 0,
-      Mass2: mass2 ?? 0,
-      twoPendulums: length2 !== undefined && mass2 !== undefined
-    });
-  } catch (error) {
-    console.error('Error saving pendulum data:', error);
-  }
-
+      await axios.post(`${API_BASE_URL}/pendulum`, {
+        Length1: length1,
+        Mass1: mass1,
+        Length2: length2 ?? 0,
+        Mass2: mass2 ?? 0,
+        twoPendulums: length2 !== undefined && mass2 !== undefined
+      });
+    } catch (error) {
+      console.error('Error saving pendulum data:', error);
+    }
   };
 
   const handleAirResistanceChange = (value: boolean) => {
     setAirResistance(value);
+    if (value) {
+      setShowLanguagePopup(true); // Show popup when airResistance is true
+    } else {
+      setShowLanguagePopup(false); // Hide popup if airResistance is false
+    }
   };
 
   const handleEnergyChange = (newPendulumData: { color: string; energy: { mechanical: number; kinetic: number; potential: number } }[]) => {
     setPendulumData(newPendulumData);
+  };
+
+  const handleCloseLanguagePopup = () => {
+    setShowLanguagePopup(false);
+  };
+
+  const handleLanguageSave = () => {
+    setShowLanguagePopup(false);
+    setShowDetailsPopup(true);
+  };
+
+  const handleCloseDetailsPopup = () => {
+    setShowDetailsPopup(false);
   };
 
   return (
@@ -110,6 +130,20 @@ function App() {
             onFreeBodyDiagramChange={() => {}} 
             onValuesChange={() => {}} 
           />
+          {showLanguagePopup && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="relative bg-white rounded-lg p-6">
+                <Language onClose={handleCloseLanguagePopup} onSave={handleLanguageSave} />
+              </div>
+            </div>
+          )}
+          {showDetailsPopup && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="relative bg-white rounded-lg p-6">
+                <Details onClose={handleCloseDetailsPopup} description={description} />
+              </div>
+            </div>
+          )}
         </div>
       </section>
       <ControlPanel
