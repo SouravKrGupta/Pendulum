@@ -2,8 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import { Group } from 'three';
-import axios from 'axios';
-import { API_BASE_URL } from '../config';
+// import axios from 'axios';
+// import { API_BASE_URL } from '../config';
 interface PendulumProps {
   isPlaying: boolean;
   playbackSpeed: number;
