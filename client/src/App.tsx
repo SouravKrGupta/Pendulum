@@ -25,7 +25,7 @@ function App() {
   const [pendulumData, setPendulumData] = useState<{ color: string; energy: { mechanical: number; kinetic: number; potential: number } }[]>([]);
   const [showLanguagePopup, setShowLanguagePopup] = useState(false);
   const [showDetailsPopup, setShowDetailsPopup] = useState(false);
-  const [description, setDescription] = useState("Default description");
+  const [description] = useState("Default description");
 
   const handlePlayPauseClick = () => {
     setIsPlaying(prev => !prev);
