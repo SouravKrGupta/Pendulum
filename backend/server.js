@@ -5,12 +5,12 @@ const dotenv = require("dotenv");
 const cors =require('cors')
 const connectDb = require("./config/db");
 
-
-//routes import
-
-
 //dotenv conig
 dotenv.config();
+//routes import
+const PendulumRouter = require('./routes/pendulumRouter')
+const EnergyRouter=require('./routes/energyRouter')
+//mongodb connection
 connectDb();
 
 
@@ -24,6 +24,8 @@ app.use(moragan("dev"));
 app.use(cors());
 
 //routes
+app.use('/api/v1',PendulumRouter)
+app.use('/api/v1/energy',EnergyRouter)
 
 //server Api test
 app.get("/", async (req, res) => {

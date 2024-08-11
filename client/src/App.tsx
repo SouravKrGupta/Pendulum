@@ -6,8 +6,9 @@ import Recorder from './component/Recorder';
 import Controls from './component/Controls';
 import Options from './component/Options';
 import ControlPanel from './component/ControlPanel';
-import Protractor from './component/canvas/Protector'; // Corrected name
+import Protractor from './component/canvas/Protector'; 
 import BallGroup from './component/canvas/BallGroup';
+import axios from 'axios';
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -40,12 +41,27 @@ function App() {
     setTimeout(() => setResetPendulum(false), 0);
   };
 
-  const handlePendulumChange = (length1: number, mass1: number, length2?: number, mass2?: number) => {
+  const handlePendulumChange =async (length1: number, mass1: number, length2?: number, mass2?: number) => {
     setLength1(length1);
     setMass1(mass1);
     setLength2(length2 ?? 0);
     setMass2(mass2 ?? 0);
     setTwoPendulums(length2 !== undefined && mass2 !== undefined);
+    // Save pendulum data to backend
+   
+    try {
+
+    await axios.post('http://localhost:8080/api/v1/pendulum', {
+      Length1: length1,
+      Mass1: mass1,
+      Length2: length2 ?? 0,
+      Mass2: mass2 ?? 0,
+      twoPendulums: length2 !== undefined && mass2 !== undefined
+    });
+  } catch (error) {
+    console.error('Error saving pendulum data:', error);
+  }
+
   };
 
   const handleAirResistanceChange = (value: boolean) => {
@@ -64,7 +80,7 @@ function App() {
           <Recorder />
         </div>
 
-        <div className="flex-1 justify-center md:justify-end">
+        <div className="flex-1 flex justify-center md:justify-end">
           <Canvas
             camera={{ position: [0, 5, 10], fov: 50 }}
             style={{ width: '700px', height: '500px' }}
@@ -83,7 +99,7 @@ function App() {
               onEnergyChange={handleEnergyChange}
             />
             {airResistance && <BallGroup />}
-            <Protractor /> {/* Ensure this is correctly positioned */}
+            <Protractor /> 
           </Canvas>
         </div>
 

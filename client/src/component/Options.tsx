@@ -16,18 +16,21 @@ const Options: React.FC<OptionsProps> = ({
   const [values, setValues] = useState<boolean>(false);
 
   const handleAirResistanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAirResistance(e.target.checked);
-    onAirResistanceChange(e.target.checked);
+    const value = e.target.checked;
+    setAirResistance(value);
+    onAirResistanceChange(value);
   };
 
   const handleFreeBodyDiagramChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFreeBodyDiagram(e.target.checked);
-    onFreeBodyDiagramChange(e.target.checked);
+    const value = e.target.checked;
+    setFreeBodyDiagram(value);
+    onFreeBodyDiagramChange(value);
   };
 
   const handleValuesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues(e.target.checked);
-    onValuesChange(e.target.checked);
+    const value = e.target.checked;
+    setValues(value);
+    onValuesChange(value);
   };
 
   return (
@@ -44,7 +47,7 @@ const Options: React.FC<OptionsProps> = ({
             onChange={handleAirResistanceChange}
             className="form-checkbox"
           />
-          <span className="text-sm">Air Resistance</span>
+          <span>Air Resistance</span>
         </label>
 
         <label className="flex items-center space-x-2">
@@ -54,7 +57,7 @@ const Options: React.FC<OptionsProps> = ({
             onChange={handleFreeBodyDiagramChange}
             className="form-checkbox"
           />
-          <span className="text-sm">Free Body Diagram</span>
+          <span>Free Body Diagram</span>
         </label>
 
         <label className="flex items-center space-x-2">
@@ -64,7 +67,7 @@ const Options: React.FC<OptionsProps> = ({
             onChange={handleValuesChange}
             className="form-checkbox"
           />
-          <span className="text-sm">Values</span>
+          <span>Show Values</span>
         </label>
       </div>
     </div>

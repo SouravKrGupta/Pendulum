@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
-import {Group} from 'three'
+import { Group } from 'three';
+import axios from 'axios';
+
 interface PendulumProps {
   isPlaying: boolean;
   playbackSpeed: number;
@@ -90,7 +92,7 @@ const Pendulum: React.FC<PendulumProps> = ({
         const potential2 = mass2 * g * h2;
         const mechanical2 = kinetic2 + potential2;
 
-        onEnergyChange([
+        const pendulumData = [
           {
             color: 'red',
             energy: { mechanical: mechanical1, kinetic: kinetic1, potential: potential1 }
@@ -99,14 +101,37 @@ const Pendulum: React.FC<PendulumProps> = ({
             color: 'blue',
             energy: { mechanical: mechanical2, kinetic: kinetic2, potential: potential2 }
           }
-        ]);
+        ];
+
+        onEnergyChange(pendulumData);
+
+        // Post energy data to backend
+        axios.post('http://localhost:8080/api/v1/energy/add', {
+          potentialEnergy1: potential1,
+          kineticEnergy1: kinetic1,
+          mechanicalEnergy1: mechanical1,
+          potentialEnergy2: potential2,
+          kineticEnergy2: kinetic2,
+          mechanicalEnergy2: mechanical2,
+          airResistance
+        }).catch(error => console.error('Error saving energy data:', error));
       } else {
-        onEnergyChange([
+        const pendulumData = [
           {
             color: 'red',
             energy: { mechanical: mechanical1, kinetic: kinetic1, potential: potential1 }
           }
-        ]);
+        ];
+
+        onEnergyChange(pendulumData);
+
+        // Post energy data to backend
+        axios.post('http://localhost:8080/api/v1/energy/add', {
+          potentialEnergy1: potential1,
+          kineticEnergy1: kinetic1,
+          mechanicalEnergy1: mechanical1,
+          airResistance
+        }).catch(error => console.error('Error saving energy data:', error));
       }
     }
   });
