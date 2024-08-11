@@ -28,7 +28,7 @@ app.use('/api/v1',PendulumRouter)
 app.use('/api/v1/energy',EnergyRouter)
 
 //server Api test
-app.get("/", async (req, res) => {
+app.get("/run", async (req, res) => {
     res.send("server running");
   });
   

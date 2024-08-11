@@ -106,15 +106,15 @@ const Pendulum: React.FC<PendulumProps> = ({
         onEnergyChange(pendulumData);
 
         // Post energy data to backend
-        axios.post(`${API_BASE_URL}/energy/add`, {
-          potentialEnergy1: potential1,
-          kineticEnergy1: kinetic1,
-          mechanicalEnergy1: mechanical1,
-          potentialEnergy2: potential2,
-          kineticEnergy2: kinetic2,
-          mechanicalEnergy2: mechanical2,
-          airResistance
-        }).catch(error => console.error('Error saving energy data:', error));
+        // axios.post(`${API_BASE_URL}/energy/add`, {
+        //   potentialEnergy1: potential1,
+        //   kineticEnergy1: kinetic1,
+        //   mechanicalEnergy1: mechanical1,
+        //   potentialEnergy2: potential2,
+        //   kineticEnergy2: kinetic2,
+        //   mechanicalEnergy2: mechanical2,
+        //   airResistance
+        // }).catch(error => console.error('Error saving energy data:', error));
       } else {
         const pendulumData = [
           {
@@ -126,12 +126,12 @@ const Pendulum: React.FC<PendulumProps> = ({
         onEnergyChange(pendulumData);
 
         // Post energy data to backend
-        axios.post('http://localhost:8080/api/v1/energy/add', {
-          potentialEnergy1: potential1,
-          kineticEnergy1: kinetic1,
-          mechanicalEnergy1: mechanical1,
-          airResistance
-        }).catch(error => console.error('Error saving energy data:', error));
+        // axios.post(`${API_BASE_URL}/energy/add`, {
+        //   potentialEnergy1: potential1,
+        //   kineticEnergy1: kinetic1,
+        //   mechanicalEnergy1: mechanical1,
+        //   airResistance
+        // }).catch(error => console.error('Error saving energy data:', error));
       }
     }
   });
